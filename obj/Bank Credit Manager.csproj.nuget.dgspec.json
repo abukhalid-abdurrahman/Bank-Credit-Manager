@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Faridun\\Allif Academy\\Bank Credit Manager\\Bank Credit Manager.csproj": {}
+    "C:\\Users\\НИССО\\Desktop\\Faridun\\Bank-Credit-Manager\\Bank Credit Manager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Faridun\\Allif Academy\\Bank Credit Manager\\Bank Credit Manager.csproj": {
+    "C:\\Users\\НИССО\\Desktop\\Faridun\\Bank-Credit-Manager\\Bank Credit Manager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Faridun\\Allif Academy\\Bank Credit Manager\\Bank Credit Manager.csproj",
+        "projectUniqueName": "C:\\Users\\НИССО\\Desktop\\Faridun\\Bank-Credit-Manager\\Bank Credit Manager.csproj",
         "projectName": "Bank Credit Manager",
-        "projectPath": "C:\\Users\\Faridun\\Allif Academy\\Bank Credit Manager\\Bank Credit Manager.csproj",
-        "packagesPath": "C:\\Users\\Faridun\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Faridun\\Allif Academy\\Bank Credit Manager\\obj\\",
+        "projectPath": "C:\\Users\\НИССО\\Desktop\\Faridun\\Bank-Credit-Manager\\Bank Credit Manager.csproj",
+        "packagesPath": "C:\\Users\\НИССО\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\НИССО\\Desktop\\Faridun\\Bank-Credit-Manager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Faridun\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\НИССО\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -35,6 +35,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[*, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
