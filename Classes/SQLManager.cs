@@ -60,7 +60,25 @@ namespace Bank_Credit_Manager
         ///</summary>
         public SqlDataReader Select(string _query)
         {
-            throw new NotImplementedException();
+            try
+            {
+                SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
+                _sqlConn.Open();
+                if(this.isConnected(_sqlConn))
+                {
+                    SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
+                    var reader = _sqlCmd.ExecuteReader();
+                    _sqlConn.Close();
+                    return reader;
+                }
+                else
+                    return null;
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex.Message);
+                return null;
+            }
         }
     }
 }
