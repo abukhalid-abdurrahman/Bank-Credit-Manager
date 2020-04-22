@@ -32,7 +32,7 @@ namespace Bank_Credit_Manager
                 _sqlConn.Open();
                 if(this.isConnected(_sqlConn))
                 {
-                    SqlCommand _sqlCmd = new SqlCommand($"insert into dbo.{_tableName} (_columns) values(_values)", _sqlConn);  
+                    SqlCommand _sqlCmd = new SqlCommand($"insert into dbo.{_tableName} ({_columns}) values({_values})", _sqlConn);  
                     _sqlCmd.ExecuteNonQuery();
                     _sqlConn.Close();
                 } 

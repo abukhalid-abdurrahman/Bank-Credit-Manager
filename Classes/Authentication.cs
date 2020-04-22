@@ -7,6 +7,7 @@
 */
 using System;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace Bank_Credit_Manager
 {
@@ -21,19 +22,26 @@ namespace Bank_Credit_Manager
         }
 
         ///<summary>
-        ///Создание аккаунта администратора
+        ///Регистрация аккаунта
         ///</summary>
-        public bool CreateAdminAccount()
+        public bool RegistrateAccount(string _table_name)
         {
-            
-        }
-
-        ///<summary>
-        ///Создание аккаунта для клиента
-        ///</summary>
-        public bool CreateClientAccount()
-        {
-            throw new NotImplementedException();
+            if(this.isPreviouslyCreated(true))
+                return false;
+            else
+            {
+                try
+                {
+                    SQLManager _sqlManager = new SQLManager();
+                    _sqlManager.InsertData($"{_table_name}", "_name, _password", "'{username}', '{userpassword}'");
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    Log.Error(ex.Message);
+                    return false;
+                }
+            }
         }
 
         ///<summary>
@@ -43,9 +51,9 @@ namespace Bank_Credit_Manager
         {
             string _query = string.Empty;
             if(_admin)
-                _query = "select _admin_name from admin_list_table";
+                _query = $"select _name from admin_list_table where _name={username}";
             else
-                _query = "select _user_name from users_list_table";
+                _query = $"select _name from users_list_table where _name={username}";
             SQLManager _sqlManager = new SQLManager();
             SqlDataReader _reader = _sqlManager.Select(_query);
             if(_reader.FieldCount > 0)
@@ -57,9 +65,15 @@ namespace Bank_Credit_Manager
         ///<summary>
         ///Авторизация
         ///</summary>
-        public bool Login()
+        public bool Login(string _table_name)
         {
-            throw new NotImplementedException();
+            string _query = string.Empty;
+            SQLManager _sqlManager = new SQLManager();
+            SqlDataReader _reader = _sqlManager.Select($"select _name, _password from {_table_name} where _name={username}, _password={userpassword}");
+            if(_reader.FieldCount > 0)   
+                return true;
+            else
+                return false;
         }
 
         ///<summary>
@@ -67,15 +81,7 @@ namespace Bank_Credit_Manager
         ///</summary>
         public bool PasswordVerification()
         {
-            throw new NotImplementedException();
-        }
-
-        ///<summary>
-        ///Регистрация
-        ///</summary>
-        public bool Registrate()
-        {
-            throw new NotImplementedException();
+            return Regex.IsMatch(userpassword, "^[a-zA-Z0-9]+$");
         }
     }
 }
