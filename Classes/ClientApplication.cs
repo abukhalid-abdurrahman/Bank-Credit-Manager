@@ -16,17 +16,33 @@ namespace Bank_Credit_Manager
         {
             SQLManager _sqlManager = new SQLManager();
             _sqlManager.InsertData("users_application", "_name, _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_history, _arrearage_in_credit_history, _credit_aim, _credit_term, _status, _ball, _results, _is_payed", 
-            $"{_name}, {_gender}, {_age}, {_isMarried}, {_nation}, {_creditSumm}, {this.CreditsCount()}, {this.CreditArrearage()}, {_creditAim}, {_creditTerm}, 'NONE', 0, 0, 0");
+            $"'{_name}', '{_gender}', {_age}, '{_isMarried}', '{_nation}', {_creditSumm}, {this.CreditsCount(_name)}, {this.CreditArrearage(_name)}, '{_creditAim}', {_creditTerm}, 'NONE', 0, 0, 0");
         }
 
-        public int CreditArrearage()
+        public int CreditArrearage(string _name)
         {
-            throw new NotImplementedException();
+            SQLManager _sqlManager = new SQLManager();
+            SqlDataReader _reader = _sqlManager.Select($"select _name from users_application where _name='{_name}'");
+            if(_reader.FieldCount > 0)
+            {
+                _reader = _sqlManager.Select("select _arrearage_in_credit_history from users_application where _name='{_name}'");
+                return Convert.ToInt32(_reader.GetValue(0));
+            }
+            else
+                return 0;
         }
 
-        public int CreditsCount()
+        public int CreditsCount(string _name)
         {
-            throw new NotImplementedException();
+            SQLManager _sqlManager = new SQLManager();
+            SqlDataReader _reader = _sqlManager.Select($"select _name from users_application where _name='{_name}'");
+            if(_reader.FieldCount > 0)
+            {
+                _reader = _sqlManager.Select("select _credit_history from users_application where _name='{_name}'");
+                return Convert.ToInt32(_reader.GetValue(0));
+            }
+            else
+                return 0;
         }
     }
 }
