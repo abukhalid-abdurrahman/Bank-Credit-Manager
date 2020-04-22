@@ -6,6 +6,7 @@
     Описание: Осуществление регистрацию и авторизацию пользователя
 */
 using System;
+using System.Data.SqlClient;
 
 namespace Bank_Credit_Manager
 {
@@ -24,7 +25,7 @@ namespace Bank_Credit_Manager
         ///</summary>
         public bool CreateAdminAccount()
         {
-            throw new NotImplementedException();
+            
         }
 
         ///<summary>
@@ -38,9 +39,19 @@ namespace Bank_Credit_Manager
         ///<summary>
         ///Возвращает True если пользователь с заданым логином существует, иначе Else
         ///</summary>
-        public bool isPreviouslyCreated()
+        public bool isPreviouslyCreated(bool _admin)
         {
-            throw new NotImplementedException();
+            string _query = string.Empty;
+            if(_admin)
+                _query = "select _admin_name from admin_list_table";
+            else
+                _query = "select _user_name from users_list_table";
+            SQLManager _sqlManager = new SQLManager();
+            SqlDataReader _reader = _sqlManager.Select(_query);
+            if(_reader.FieldCount > 0)
+                return true;
+            else
+                return false;
         }
 
         ///<summary>
