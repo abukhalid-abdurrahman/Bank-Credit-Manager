@@ -6,6 +6,7 @@
     Описание: Осуществление связи с базой данных и отправкой запросов
 */
 using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Bank_Credit_Manager
@@ -17,7 +18,7 @@ namespace Bank_Credit_Manager
         ///</summary>
         public string ConnectionString()
         {
-            throw new NotImplementedException();
+            return "Data Source=localhost;Initial catalog=Faridun;Integrated Security=True";
         }
 
         ///<summary>
@@ -25,7 +26,7 @@ namespace Bank_Credit_Manager
         ///</summary>
         public void InsertData(string _tableName, string _query)
         {
-            throw new NotImplementedException();
+               
         }
 
         ///<summary>
