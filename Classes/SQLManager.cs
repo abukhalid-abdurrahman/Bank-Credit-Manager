@@ -24,17 +24,35 @@ namespace Bank_Credit_Manager
         ///<summary>
         ///Вводит новые данные в таблицу
         ///</summary>
-        public void InsertData(string _tableName, string _query)
+        public void InsertData(string _tableName, string _columns, string _values)
         {
-               
+            try
+            {
+                SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
+                _sqlConn.Open();
+                if(this.isConnected(_sqlConn))
+                {
+                    SqlCommand _sqlCmd = new SqlCommand($"insert into dbo.{_tableName} (_columns) values(_values)", _sqlConn);  
+                    _sqlCmd.ExecuteNonQuery();
+                    _sqlConn.Close();
+                } 
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
+
         }
 
         ///<summary>
         ///Возвращает True если соединен с базой данных, иначе Else
         ///</summary>
-        public bool isConnected()
+        public bool isConnected(SqlConnection _sqlConn)
         {
-            throw new NotImplementedException();
+            if(_sqlConn.State == ConnectionState.Open)
+                return true;
+            else
+                return false;
         }
 
         ///<summary>
