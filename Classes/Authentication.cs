@@ -15,6 +15,9 @@ namespace Bank_Credit_Manager
     {
         private string username = string.Empty;
         private string userpassword = string.Empty;
+        public string dateOfBirth = string.Empty;
+        public string homePath = string.Empty;
+        public string seria = string.Empty;
         public Authentication(string _name, string _password)
         {
             username = _name;
@@ -33,7 +36,10 @@ namespace Bank_Credit_Manager
                 try
                 {
                     SQLManager _sqlManager = new SQLManager();
-                    _sqlManager.InsertData($"{_table_name}", "_name, _password", "'{username}', '{userpassword}'");
+                    if(_table_name == "users_list_table")
+                        _sqlManager.InsertData("users_list_table", "_name, _password, _date_of_birth, _home_path, _seria", $"'{username}', '{userpassword}', '{dateOfBirth}', '{homePath}', '{seria}'");
+                    else
+                        _sqlManager.InsertData($"{_table_name}", "_name, _password", "'{username}', '{userpassword}'");
                     return true;
                 }
                 catch(Exception ex)

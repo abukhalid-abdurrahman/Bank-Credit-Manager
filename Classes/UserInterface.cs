@@ -11,6 +11,5 @@ namespace Bank_Credit_Manager
 {
     public class UserInterface : IUserInterface
     {
-
     }
 }

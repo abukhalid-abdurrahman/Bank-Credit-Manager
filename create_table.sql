@@ -9,6 +9,9 @@ create table dbo.users_list_table (
     _id                               integer identity(1,1) not null,
     _name                             nchar(30) not null,
     _password                         nchar(35) not null,
+    _date_of_birth                    date not null,
+    _home_path                        nchar(35) not null,
+    _seria                            nchar(9) not null,
     constraint PK_users_list_table    primary key clustered(_id asc)
 );
 
