@@ -8,6 +8,7 @@ create table dbo.admin_list_table (
 create table dbo.users_list_table (
     _id                               integer identity(1,1) not null,
     _name                             nchar(30) not null,
+    _login                            integer not null,
     _password                         nchar(35) not null,
     _date_of_birth                    date not null,
     _home_path                        nchar(35) not null,
@@ -17,7 +18,7 @@ create table dbo.users_list_table (
 
 create table dbo.users_application(
     _id                               integer identity(1,1) not null,
-    _name                             nchar(30) not null,
+    _login                            nchar(30) not null,
     _user_gender                      nchar(3) not null,
     _user_age                         integer not null,
     _married                          nchar(10) not null,

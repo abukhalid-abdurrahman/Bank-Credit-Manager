@@ -75,7 +75,31 @@ namespace Bank_Credit_Manager
 
         public void AdminOutput()
         {
+            this.Output("Панель администратора:\t1.Просмотр заявок\t2.Просмотр клиентов\t0.Выход");
+            string _cmd = string.Empty;
+            while(_cmd == "0")
+            {
+                _cmd = this.Input("Выберите действие(1,2,0): ");
+                if(_cmd == "1")
+                {
+                    string _name = this.Input("Введите логин(номер телефона) пользователя: ");
+                    SQLManager _sqlManger = new SQLManager();
+                    SqlDataReader _reader = _sqlManger.Select($"select _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_aim, _credit_term, _results from users_application where _login='{_name}'"); 
+                    this.Output("Данные заявки: " + _sqlManger.Select($"select _name from users_list_table where _login={_name}").GetValue(0).ToString().Trim());
+                    this.Output("Пол: " + _reader.GetValue(0).ToString().Trim());
+                    this.Output("Возраст: " + _reader.GetValue(1).ToString().Trim());
+                    this.Output("Семейное положение: " + _reader.GetValue(2).ToString().Trim());
+                    this.Output("Гражданство: " + _reader.GetValue(3).ToString().Trim());
+                    this.Output("Cумма кредита от общего дохода: " + _reader.GetValue(4).ToString().Trim());
+                    this.Output("Цель кредита: " + _reader.GetValue(5).ToString().Trim());
+                    this.Output("Срок кредита: " + _reader.GetValue(6).ToString().Trim());
+                    this.Output("Результат: " + _reader.GetValue(7).ToString().Trim());
+                }
+                else if(_cmd == "2")
+                {
 
+                }
+            }
         }
         public void UserOutput()
         {
