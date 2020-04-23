@@ -89,8 +89,27 @@ namespace Bank_Credit_Manager
             else if(_user_age => 63)
                 _balls++;
 
+            if(_nationality = "Таджикистан")
+                _balls++;
+            else if(_nationality = "Зарубеж")
+                _balls += 0;
 
+            if(_credit_summ_from_general_revenue < 80)
+                _balls += 4;
+            else if(_credit_summ_from_general_revenue => 80 && _credit_summ_from_general_revenue <= 150)
+                _balls += 3;
+            else if(_credit_summ_from_general_revenue > 150 && _credit_summ_from_general_revenue <= 250)
+                _balls += 2;
+            else if(_credit_summ_from_general_revenue > 250)
+                _balls += 1;
 
+            if(_credit_history > 3)
+                _balls += 2;
+            else if(_credit_history == 1 || _credit_history == 2)
+                _balls++;
+            else if(_credit_history == 0)
+                _balls -= 1;
+       
             if(_balls > 11)
                 return true;
             else if (_balls <= 11)
