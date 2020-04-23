@@ -31,6 +31,7 @@ namespace Bank_Credit_Manager
             if(_reader.FieldCount > 0)
             {
                 _reader = _sqlManager.Select("select _arrearage_in_credit_history from users_application where _name='{_name}'");
+                _reader.Close();
                 return Convert.ToInt32(_reader.GetValue(0));
             }
             else
@@ -44,6 +45,7 @@ namespace Bank_Credit_Manager
             if(_reader.FieldCount > 0)
             {
                 _reader = _sqlManager.Select("select _credit_history from users_application where _name='{_name}'");
+                _reader.Close();
                 return Convert.ToInt32(_reader.GetValue(0));
             }
             else
@@ -55,14 +57,14 @@ namespace Bank_Credit_Manager
             int _balls = 0;
             SQLManager _sqlManager = new SQLManager();
             SqlDataReader _reader = _sqlManager.Select("select _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_history, _arrearage_in_credit_history, _credit_aim, _credit_term from users_application where _name='{_name}'");
-            string _user_gender = _reader.GetValue(0);
+            string _user_gender = _reader.GetValue(0).ToString().Trim();
             int _user_age = _reader.GetValue(1);
-            string _married = _reader.GetValue(2);
-            string _nationality = _reader.GetValue(3);
+            string _married = _reader.GetValue(2).ToString().Trim();
+            string _nationality = _reader.GetValue(3).ToString().Trim();
             int _credit_summ_from_general_revenue = _reader.GetValue(4);
             int _credit_history = _reader.GetValue(5);
             int _arrearage_in_credit_history = _reader.GetValue(6);
-            string _credit_aim = _reader.GetValue(7);
+            string _credit_aim = _reader.GetValue(7).ToString().Trim();
             int _credit_term = _reader.GetValue(8);
 
             if(_user_gender == "муж")

@@ -94,10 +94,24 @@ namespace Bank_Credit_Manager
                     this.Output("Цель кредита: " + _reader.GetValue(5).ToString().Trim());
                     this.Output("Срок кредита: " + _reader.GetValue(6).ToString().Trim());
                     this.Output("Результат: " + _reader.GetValue(7).ToString().Trim());
+                    _reader.Close();
                 }
                 else if(_cmd == "2")
                 {
-
+                    this.Output("Список всех клиентов: ");
+                    SQLManager _sqlManger = new SQLManager();
+                    SqlDataReader _reader = _sqlManger.Select("select * from users_list_table");
+                    while(_reader.Read())
+                    {
+                        this.Output("ID: " + _reader.GetValue(0));
+                        this.Output("Имя: " + _reader.GetValue(1));
+                        this.Output("Логин (номер телнфона): " + _reader.GetValue(2));
+                        this.Output("Пароль: " + _reader.GetValue(3));
+                        this.Output("ДР: " + _reader.GetValue(4));
+                        this.Output("Прописка: " + _reader.GetValue(5));
+                        this.Output("Серия паспорта: " + _reader.GetValue(6));
+                    }
+                    _reader.Close();
                 }
             }
         }
