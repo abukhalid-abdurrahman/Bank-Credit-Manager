@@ -54,7 +54,16 @@ namespace Bank_Credit_Manager
         {
             int _balls = 0;
             SQLManager _sqlManager = new SQLManager();
-            SqlDataReader _reader = _sqlManager.Select("select _name, _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_history, _arrearage_in_credit_history, _credit_aim, _credit_term, _status, _ball, _results, _is_payed from users_application where _name='{_name}'");
+            SqlDataReader _reader = _sqlManager.Select("select _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_history, _arrearage_in_credit_history, _credit_aim, _credit_term from users_application where _name='{_name}'");
+            string _user_gender = _reader.GetValue(0);
+            int _user_age = _reader.GetValue(1);
+            string _married = _reader.GetValue(2);
+            string _nationality = _reader.GetValue(3);
+            int _credit_summ_from_general_revenue = _reader.GetValue(4);
+            int _credit_history = _reader.GetValue(5);
+            int _arrearage_in_credit_history = _reader.GetValue(6);
+            string _credit_aim = _reader.GetValue(7);
+            int _credit_term = _reader.GetValue(8);
             if(_balls > 11)
                 return true;
             else if (_balls <= 11)
