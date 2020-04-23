@@ -12,6 +12,11 @@ namespace Bank_Credit_Manager
 {
     public class ClientApplication : IClientApplication
     {
+        
+        public ClientApplication(string name)
+        {
+
+        }
         public void CreateApplication(string _name, string _gender, string _isMarried, int _age, string _nation, int _creditSumm, string _creditAim, string _creditTerm)
         {
             SQLManager _sqlManager = new SQLManager();
@@ -43,6 +48,17 @@ namespace Bank_Credit_Manager
             }
             else
                 return 0;
+        }
+
+        public bool AcceptedToCredit()
+        {
+            int _balls = 0;
+            SQLManager _sqlManager = new SQLManager();
+            SqlDataReader _reader = _sqlManager.Select("select _name, _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_history, _arrearage_in_credit_history, _credit_aim, _credit_term, _status, _ball, _results, _is_payed from users_application where _name='{_name}'");
+            if(_balls > 11)
+                return true;
+            else if (_balls <= 11)
+                return false;
         }
     }
 }
