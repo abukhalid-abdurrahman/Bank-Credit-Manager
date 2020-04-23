@@ -109,7 +109,29 @@ namespace Bank_Credit_Manager
                 _balls++;
             else if(_credit_history == 0)
                 _balls -= 1;
-       
+
+            if(_arrearage_in_credit_history > 7)
+                _balls -= 3;
+            else if(_arrearage_in_credit_history => 5 || _arrearage_in_credit_history <= 7)
+                _balls -= 2;
+            else if(_arrearage_in_credit_history == 4)
+                _balls -= 1;
+            else if(_arrearage_in_credit_history < 3)
+                _balls = 0;
+
+
+            if(_credit_aim == "бытовая техника")
+                _balls += 2;
+            else if(_credit_aim == "ремонт")
+                _balls++;
+            else if(_credit_aim == "телефон")
+                _balls += 0;
+            else if(_credit_aim == "прочее")
+                _balls -= 1;
+
+            if(_credit_term > 12 || _credit_term <= 12)
+                _balls++;
+
             if(_balls > 11)
                 return true;
             else if (_balls <= 11)
