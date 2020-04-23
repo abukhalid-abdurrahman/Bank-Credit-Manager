@@ -82,9 +82,9 @@ namespace Bank_Credit_Manager
 
             if(_user_age < 25)
                 _balls += 0;
-            else if(_user_age => 25 && _user_age <= 35)
+            else if(_user_age => 25 || _user_age <= 35)
                 _balls++;
-            else if(_user_age => 36 && _user_age <= 62)
+            else if(_user_age => 36 || _user_age <= 62)
                 _balls += 2;
             else if(_user_age => 63)
                 _balls++;
@@ -96,9 +96,9 @@ namespace Bank_Credit_Manager
 
             if(_credit_summ_from_general_revenue < 80)
                 _balls += 4;
-            else if(_credit_summ_from_general_revenue => 80 && _credit_summ_from_general_revenue <= 150)
+            else if(_credit_summ_from_general_revenue => 80 || _credit_summ_from_general_revenue <= 150)
                 _balls += 3;
-            else if(_credit_summ_from_general_revenue > 150 && _credit_summ_from_general_revenue <= 250)
+            else if(_credit_summ_from_general_revenue > 150 || _credit_summ_from_general_revenue <= 250)
                 _balls += 2;
             else if(_credit_summ_from_general_revenue > 250)
                 _balls += 1;
@@ -117,7 +117,7 @@ namespace Bank_Credit_Manager
             else if(_arrearage_in_credit_history == 4)
                 _balls -= 1;
             else if(_arrearage_in_credit_history < 3)
-                _balls = 0;
+                _balls += 0;
 
 
             if(_credit_aim == "бытовая техника")
