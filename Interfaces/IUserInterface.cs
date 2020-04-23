@@ -8,5 +8,7 @@ namespace Bank_Credit_Manager
         void LoginOutput();
         void RegistrateOutput();
         void ApplicationInput();
+        void AdminOutput();
+        void UserOutput();
     }
 }
