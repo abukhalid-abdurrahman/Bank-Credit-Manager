@@ -63,9 +63,15 @@ namespace Bank_Credit_Manager
             SQLManager _sqlManager = new SQLManager();
             SqlDataReader _reader = _sqlManager.Select(_query);
             if(_reader.FieldCount > 0)
+            {
+                 _reader.Close();
                 return true;
+            }
             else
+            {
+                _reader.Close();
                 return false;
+            }
         }
 
         ///<summary>
@@ -76,10 +82,16 @@ namespace Bank_Credit_Manager
             string _query = string.Empty;
             SQLManager _sqlManager = new SQLManager();
             SqlDataReader _reader = _sqlManager.Select($"select _name, _password from {_table_name} where _name={username}, _password={userpassword}");
-            if(_reader.FieldCount > 0)   
+            if(_reader.FieldCount > 0)
+            {
+                 _reader.Close();
                 return true;
+            }
             else
+            {
+                _reader.Close();
                 return false;
+            }
         }
 
         ///<summary>
