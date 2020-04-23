@@ -15,6 +15,13 @@ create table dbo.users_list_table (
     _seria                            nchar(9) not null,
     constraint PK_users_list_table    primary key clustered(_id asc)
 );
+create table dbo.payment_list (
+    _id                               integer identity(1,1) not null,
+    _login                            integer not null,
+    _date                             date not null,
+    _summ                             integer not null,
+    constraint PK_users_list_table    primary key clustered(_id asc)
+);
 
 create table dbo.users_application(
     _id                               integer identity(1,1) not null,
