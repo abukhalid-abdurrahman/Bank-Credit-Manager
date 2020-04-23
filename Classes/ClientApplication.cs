@@ -64,6 +64,33 @@ namespace Bank_Credit_Manager
             int _arrearage_in_credit_history = _reader.GetValue(6);
             string _credit_aim = _reader.GetValue(7);
             int _credit_term = _reader.GetValue(8);
+
+            if(_user_gender == "муж")
+                _balls++;
+            else if(_user_gender == "жен")
+                _balls += 2;
+
+            if(_marrieda == "холост")
+                _balls++;
+            else if(_married == "семеянин")
+                _balls += 2;
+            else if(_married == "вразводе")
+                _balls++;
+            else if(_married == "вдовец/вдова")
+                _balls += 2;
+            
+
+            if(_user_age < 25)
+                _balls += 0;
+            else if(_user_age => 25 && _user_age <= 35)
+                _balls++;
+            else if(_user_age => 36 && _user_age <= 62)
+                _balls += 2;
+            else if(_user_age => 63)
+                _balls++;
+
+
+
             if(_balls > 11)
                 return true;
             else if (_balls <= 11)
