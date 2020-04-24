@@ -206,11 +206,17 @@ namespace Bank_Credit_Manager
             _sqlManger.UpdateData("users_application", $"_status='{_status}'", $"_login={_login}");
         }
 
-        public void PaymentStory(float _summ)
+        public void PaymentStory(float _summ, string _login)
         {
             SQLManager _sqlManger = new SQLManager();
             string date = $"{DateTime.Now.Day.ToString()}.{DateTime.Now.Month.ToString()}.{DateTime.Now.Year.ToString()}";
-            float toPay = float.Parse(_sqlManger.Select("").GetValue(0).ToString().Trim().Replcae('.', ','));
+            float toPay = float.Parse(_sqlManger.Select($"select _summ from payment_list where _login={_login}").GetValue(0).ToString().Trim().Replcae('.', ','));
+            _summ = toPay - _summ;
+            _sqlManger.InsertData("payment_list", "_login, _date, _summ", $"'{_login}', '{date}', {_summ}");
+            if(_summ <= 0)
+            {
+                _sqlManger.UpdateData("users_application", "_is_payed=1", $"_login={_login}");
+            }
         }
     }
 }
