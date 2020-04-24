@@ -13,9 +13,10 @@ namespace Bank_Credit_Manager
             UI.Output("2. Регистрация");
             UI.Output("3. Внести деньги");
             UI.Output("0. Закрыть программу");
-            string cmd = UI.Input("Сделайте выбор(1,2): ");
+            string cmd = string.Empty;
             while(cmd != "0")
             {
+                cmd = UI.Input("Сделайте выбор(1,2,3): ");
                 if(cmd == "1")
                 {
                     UI.LoginOutput();

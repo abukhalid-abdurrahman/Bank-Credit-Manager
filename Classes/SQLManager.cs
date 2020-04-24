@@ -81,6 +81,7 @@ namespace Bank_Credit_Manager
         ///</summary>
         public SqlDataReader Select(string _query)
         {
+            SqlDataReader reader = null;
             try
             {
                 SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
@@ -88,8 +89,7 @@ namespace Bank_Credit_Manager
                 if(this.isConnected(_sqlConn))
                 {
                     SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
-                    var reader = _sqlCmd.ExecuteReader();
-                    return reader;
+                    reader = _sqlCmd.ExecuteReader();
                 }
                 else
                     return null;
@@ -99,6 +99,7 @@ namespace Bank_Credit_Manager
                 Log.Error(ex.Message);
                 return null;
             }
+            return reader;
         }
     }
 }

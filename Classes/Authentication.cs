@@ -6,6 +6,7 @@
     Описание: Осуществление регистрацию и авторизацию пользователя
 */
 using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
@@ -18,6 +19,7 @@ namespace Bank_Credit_Manager
         public string dateOfBirth = string.Empty;
         public string homePath = string.Empty;
         public string seria = string.Empty;
+        private SQLManager _sqlManage = new SQLManager();
         public Authentication(string _name, string _password)
         {
             username = _name;
@@ -82,25 +84,26 @@ namespace Bank_Credit_Manager
         ///</summary>
         public bool Login(string _table_name)
         {
-            string _query = string.Empty;
-            SQLManager _sqlManager = new SQLManager();
-            SqlDataReader _reader = _sqlManager.Select($"select _name, _password from {_table_name} where _name={username} and _password={userpassword}");
-            while(_reader.Read())
+            bool _logged = false;
+            int _counted = 0;
+            SqlConncection _sqlConn = new SqlConncection(_sqlManage.ConnectionString());
+            _sqlConn.Open();
+            if(_sqlConn.State == ConnectionState.Open)
             {
-                if(_reader.FieldCount > 0)
+                SqlCommand _sqlCmd = new SqlCommand($"select (_name, _password) from {_table_name} where (_name={username} and _password={password})", _sqlConn);
+                SqlDataReader _reader = _sqlCmd.ExecuteReader();
+                while(_reader.Read())
                 {
-                    _reader.Close();
-                    _sqlManager._sqlConn.Close();
-                    return true;
+                    _counted++;
                 }
+                if(_counted > 0)
+                    _logged = true;
                 else
-                {
-                    _reader.Close();
-                    _sqlManager._sqlConn.Close();
-                    return false;
-                }
+                    _logged = false;
+                _reader.Close();
+                _sqlConn.Close();
             }
-            return false;
+            return logged;
         }
 
         ///<summary>
