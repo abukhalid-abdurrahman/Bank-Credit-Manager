@@ -56,6 +56,28 @@ namespace Bank_Credit_Manager
         }
 
         ///<summary>
+        ///Обновление данных
+        ///</summary>
+        void UpdateData(string _tableName, string _query, string _cond)
+        {
+            try
+            {
+                SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
+                _sqlConn.Open();
+                if(this.isConnected(_sqlConn))
+                {
+                    SqlCommand _sqlCmd = new SqlCommand($"update {_tableName} set {_query} where {_cond}", _sqlConn);  
+                    _sqlCmd.ExecuteNonQuery();
+                    _sqlConn.Close();
+                } 
+            }
+            catch(Exception ex)
+            {
+                Log.Error(ex.Message);
+            }
+        }
+
+        ///<summary>
         ///Возвращает данные по заданому запросу
         ///</summary>
         public SqlDataReader Select(string _query)

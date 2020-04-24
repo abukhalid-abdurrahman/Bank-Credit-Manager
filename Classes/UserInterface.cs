@@ -196,11 +196,13 @@ namespace Bank_Credit_Manager
             _client.CreateApplication(_user_gender, _married, _user_age, _nationality, _credit_summ_from_general_revenue, _credit_aim, _creditTerm);
             bool _isAccepted = _client.AcceptedToCredit();
             string _status = "NONE";
+            
             if(_isAccepted)
                 _status = "OK";
             else
                 _status = "DISOK";
 
+            
         }
     }
 }
