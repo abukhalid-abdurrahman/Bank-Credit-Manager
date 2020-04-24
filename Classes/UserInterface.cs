@@ -192,6 +192,7 @@ namespace Bank_Credit_Manager
             int _credit_summ_from_general_revenue = Convert.ToInt32(Input("Cумма кредита от общего дохода: "));
             string _credit_aim = Input("Цель кредита(бытовая техника/ремонт/телефон/прочее): ");
             int _credit_term = Convert.ToInt32(Input("Срок кредита: "));
+            int _credit_summ = Convert.ToInt32(Input("Сумма кредита: "));
             ClientApplication _client = new ClientApplication(_login);
             _client.CreateApplication(_user_gender, _married, _user_age, _nationality, _credit_summ_from_general_revenue, _credit_aim, _creditTerm);
             bool _isAccepted = _client.AcceptedToCredit();
@@ -204,6 +205,8 @@ namespace Bank_Credit_Manager
 
             SQLManager _sqlManger = new SQLManager();
             _sqlManger.UpdateData("users_application", $"_status='{_status}'", $"_login={_login}");
+            string date = $"{DateTime.Now.Day.ToString()}.{DateTime.Now.Month.ToString()}.{DateTime.Now.Year.ToString()}";
+            _sqlManger.InsertData("payment_list", "_login, _date, _summ", $"'{_login}', '{date}', {_credit_summ}");
         }
 
         public void PaymentStory(float _summ, string _login)
