@@ -63,20 +63,26 @@ namespace Bank_Credit_Manager
                 _query = $"select _name from admin_list_table where _name={username}";
             else
                 _query = $"select _name from users_list_table where _name={username}";
-            SQLManager _sqlManager = new SQLManager();
-            SqlDataReader _reader = _sqlManager.Select(_query);
-            if(_reader.FieldCount > 0)
+            bool _created = false;
+            int _counted = 0;
+            SqlConncection _sqlConn = new SqlConncection(_sqlManage.ConnectionString());
+            _sqlConn.Open();
+            if(_sqlConn.State == ConnectionState.Open)
             {
-                 _reader.Close();
-                 _sqlManager._sqlConn.Close();
-                return true;
-            }
-            else
-            {
+                SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
+                SqlDataReader _reader = _sqlCmd.ExecuteReader();
+                while(_reader.Read())
+                {
+                    _counted++;
+                }
+                if(_counted > 0)
+                    _created = true;
+                else
+                    _created = false;
                 _reader.Close();
-                _sqlManager._sqlConn.Close();
-                return false;
+                _sqlConn.Close();
             }
+            return _created;
         }
 
         ///<summary>
@@ -103,7 +109,7 @@ namespace Bank_Credit_Manager
                 _reader.Close();
                 _sqlConn.Close();
             }
-            return logged;
+            return _logged;
         }
 
         ///<summary>
