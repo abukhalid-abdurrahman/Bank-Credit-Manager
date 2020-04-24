@@ -208,7 +208,9 @@ namespace Bank_Credit_Manager
 
         public void PaymentStory(float _summ)
         {
-
+            SQLManager _sqlManger = new SQLManager();
+            string date = $"{DateTime.Now.Day.ToString()}.{DateTime.Now.Month.ToString()}.{DateTime.Now.Year.ToString()}";
+            float toPay = float.Parse(_sqlManger.Select("").GetValue(0).ToString().Trim().Replcae('.', ','));
         }
     }
 }
