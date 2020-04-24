@@ -145,7 +145,7 @@ namespace Bank_Credit_Manager
                 }
                 else if(_cmd == "3")
                 {
-                    _reader = _sqlManger.Select($"select _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_aim, _credit_term from users_application where _login='{_name}' and _status='ОК'");
+                    _reader = _sqlManger.Select($"select _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_aim, _credit_term from users_application where _login='{_name}' and _status='OK'");
                     this.Output("Пол: " + _reader.GetValue(0).ToString().Trim());
                     this.Output("Возраст: " + _reader.GetValue(1).ToString().Trim());
                     this.Output("Семейное положение: " + _reader.GetValue(2).ToString().Trim());
@@ -194,6 +194,13 @@ namespace Bank_Credit_Manager
             int _credit_term = Convert.ToInt32(Input("Срок кредита: "));
             ClientApplication _client = new ClientApplication(_login);
             _client.CreateApplication(_user_gender, _married, _user_age, _nationality, _credit_summ_from_general_revenue, _credit_aim, _creditTerm);
+            bool _isAccepted = _client.AcceptedToCredit();
+            string _status = "NONE";
+            if(_isAccepted)
+                _status = "OK";
+            else
+                _status = "DISOK";
+
         }
     }
 }
