@@ -174,14 +174,26 @@ namespace Bank_Credit_Manager
                 SQLManager _sqlManger = new SQLManager();
                 _sqlManger.InsertData("users_list_table", "_name, _login, _password, _date_of_birth, _home_path, _seria", $"'{_name}', {_login}, '{_password}', '{_date_of_birth}', '{_home_path}', '{_seria}'");
                 this.Output("Вы успешно зарегистрировались!");
-                this.UserOutput(_login);
+                string _agree = Input("Хотите подать заявку? (Д/Н): ");
+                if(_agree == "Д")
+                    ApplicationInput(_login);
+                else
+                    return;
             }
             else
                 RegistrateOutput();
         }
-        public void ApplicationInput()
+        public void ApplicationInput(string _login)
         {
-
+            string _user_gender = Input("Пол(муж/жен): ");
+            int _user_age = Convert.ToInt32(Input("Возраст: "));
+            string _married = Input("Семейное положение(холост/семеянин/вразводе/вдовец/вдова): ");
+            string _nationality = Input("Гражданство (Таджикистан/Зарубеж): ");
+            int _credit_summ_from_general_revenue = Convert.ToInt32(Input("Cумма кредита от общего дохода: "));
+            string _credit_aim = Input("Цель кредита(бытовая техника/ремонт/телефон/прочее): ");
+            int _credit_term = Convert.ToInt32(Input("Срок кредита: "));
+            ClientApplication _client = new ClientApplication(_login);
+            _client.CreateApplication(_user_gender, _married, _user_age, _nationality, _credit_summ_from_general_revenue, _credit_aim, _creditTerm);
         }
     }
 }

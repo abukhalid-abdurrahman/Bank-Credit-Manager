@@ -7,7 +7,7 @@ namespace Bank_Credit_Manager
         string Output(string _text);
         void LoginOutput();
         void RegistrateOutput();
-        void ApplicationInput();
+        void ApplicationInput(string _login);
         void AdminOutput();
         void UserOutput(string _name);
     }
