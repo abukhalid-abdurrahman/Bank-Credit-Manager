@@ -58,7 +58,7 @@ namespace Bank_Credit_Manager
         ///<summary>
         ///Обновление данных
         ///</summary>
-        void UpdateData(string _tableName, string _query, string _cond)
+        public void UpdateData(string _tableName, string _query, string _cond)
         {
             try
             {
