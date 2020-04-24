@@ -33,6 +33,10 @@ namespace Bank_Credit_Manager
                 }
             }
             */
+            ClientApplication cApp = new ClientApplication("901888333");
+            //cApp.CreateApplication("муж", "холост", 45, "Зарубеж", 100, "прочее", 6);
+            bool c = cApp.AcceptedToCredit();
+            Console.WriteLine(c);
         }
     }
 }

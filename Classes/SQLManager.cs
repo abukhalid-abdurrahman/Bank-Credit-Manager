@@ -66,7 +66,7 @@ namespace Bank_Credit_Manager
                 _sqlConn.Open();
                 if(this.isConnected(_sqlConn))
                 {
-                    SqlCommand _sqlCmd = new SqlCommand($"update {_tableName} set {_query} where {_cond}", _sqlConn);  
+                    SqlCommand _sqlCmd = new SqlCommand($"update [Faridun].[dbo].[{_tableName}] set {_query} where {_cond}", _sqlConn);  
                     _sqlCmd.ExecuteNonQuery();
                 } 
             }
