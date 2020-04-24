@@ -2,3 +2,19 @@ C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank 
 C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.csproj.CoreCompileInputs.cache
 C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.AssemblyInfoInputs.cache
 C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.AssemblyInfo.cs
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\Bank Credit Manager.exe
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\Bank Credit Manager.deps.json
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\Bank Credit Manager.runtimeconfig.json
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\Bank Credit Manager.runtimeconfig.dev.json
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\Bank Credit Manager.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\Bank Credit Manager.pdb
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\runtimes\win-arm64\native\sni.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\sni.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.csproj.CopyComplete
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.dll
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.pdb
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.genruntimeconfig.cache

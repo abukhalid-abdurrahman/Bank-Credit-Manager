@@ -13,6 +13,7 @@ namespace Bank_Credit_Manager
 {
     class SQLManager : ISQLManager
     {
+        public SqlConnection _sqlConn;
         ///<summary>
         ///Строка соединения
         ///</summary>
@@ -28,13 +29,12 @@ namespace Bank_Credit_Manager
         {
             try
             {
-                SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
+                _sqlConn = new SqlConnection(this.ConnectionString());
                 _sqlConn.Open();
                 if(this.isConnected(_sqlConn))
                 {
                     SqlCommand _sqlCmd = new SqlCommand($"insert into dbo.{_tableName} ({_columns}) values({_values})", _sqlConn);  
                     _sqlCmd.ExecuteNonQuery();
-                    _sqlConn.Close();
                 } 
             }
             catch(Exception ex)
@@ -68,7 +68,6 @@ namespace Bank_Credit_Manager
                 {
                     SqlCommand _sqlCmd = new SqlCommand($"update {_tableName} set {_query} where {_cond}", _sqlConn);  
                     _sqlCmd.ExecuteNonQuery();
-                    _sqlConn.Close();
                 } 
             }
             catch(Exception ex)
@@ -90,7 +89,6 @@ namespace Bank_Credit_Manager
                 {
                     SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
                     var reader = _sqlCmd.ExecuteReader();
-                    _sqlConn.Close();
                     return reader;
                 }
                 else

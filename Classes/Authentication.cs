@@ -40,6 +40,7 @@ namespace Bank_Credit_Manager
                         _sqlManager.InsertData("users_list_table", "_name, _password, _date_of_birth, _home_path, _seria", $"'{username}', '{userpassword}', '{dateOfBirth}', '{homePath}', '{seria}'");
                     else
                         _sqlManager.InsertData($"{_table_name}", "_name, _password", "'{username}', '{userpassword}'");
+                    _sqlManager._sqlConn.Close();
                     return true;
                 }
                 catch(Exception ex)
@@ -65,11 +66,13 @@ namespace Bank_Credit_Manager
             if(_reader.FieldCount > 0)
             {
                  _reader.Close();
+                 _sqlManager._sqlConn.Close();
                 return true;
             }
             else
             {
                 _reader.Close();
+                _sqlManager._sqlConn.Close();
                 return false;
             }
         }
@@ -81,17 +84,23 @@ namespace Bank_Credit_Manager
         {
             string _query = string.Empty;
             SQLManager _sqlManager = new SQLManager();
-            SqlDataReader _reader = _sqlManager.Select($"select _name, _password from {_table_name} where _name={username}, _password={userpassword}");
-            if(_reader.FieldCount > 0)
+            SqlDataReader _reader = _sqlManager.Select($"select _name, _password from {_table_name} where _name={username} and _password={userpassword}");
+            while(_reader.Read())
             {
-                 _reader.Close();
-                return true;
+                if(_reader.FieldCount > 0)
+                {
+                    _reader.Close();
+                    _sqlManager._sqlConn.Close();
+                    return true;
+                }
+                else
+                {
+                    _reader.Close();
+                    _sqlManager._sqlConn.Close();
+                    return false;
+                }
             }
-            else
-            {
-                _reader.Close();
-                return false;
-            }
+            return false;
         }
 
         ///<summary>

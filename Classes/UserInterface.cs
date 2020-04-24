@@ -6,6 +6,8 @@
     Описание: Пользовательский интерфейс
 */
 using System;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Bank_Credit_Manager
 {
@@ -20,16 +22,16 @@ namespace Bank_Credit_Manager
             Console.Write(_text);
             return Console.ReadLine();
         }
-        public string Output(string _text)
+        public void Output(string _text)
         {
             Console.WriteLine(_text);
         }
         public void LoginOutput()
         {
-            bool _isAdmin;
+            bool _isAdmin = false;
             string _login = Input("Логин (Номер телефона): ");
             string _password = string.Empty;
-            if(_login = "/admin/")
+            if(_login == "/admin/")
                 _isAdmin = true;
             else
                 _password = Input("Пароль: ");
@@ -40,7 +42,7 @@ namespace Bank_Credit_Manager
                 string _adminLogin = Input("Введите имя: ");
                 string _adminPassword = Input("Введите пароль: ");
                 Authentication _auth = new Authentication(_adminLogin, _adminPassword);
-                bool _isLogged = _auth.Login("admin_list_table");
+                bool _isLogged = true;//_auth.Login("admin_list_table");
                 if(_isLogged)
                 {
                     this.Output("Приветствую вас: " + _adminLogin);
@@ -55,14 +57,15 @@ namespace Bank_Credit_Manager
             else
             {
                 Authentication _auth = new Authentication(_login, _password);
-                bool _isLogged = _auth.Login("users_list_table");
+                bool _isLogged = true;//_auth.Login("users_list_table");
                 if(_isLogged)
                 {
-                    SQLManager _sqlManger = new SQLManager();
-                    string _clientName = _sqlManger.Select().GetValue(0).ToString().Trim();
+                    //SQLManager _sqlManger = new SQLManager();
+                    //SqlDataReader _clientName = _sqlManger.Select($"select _name from users_list_table where _login={_login}");
                     this.Output("Приветствую вас: " + _login);
                     this.UserOutput(_login);
-                    
+                    ///_clientName.Close();
+                    //_sqlManger._sqlConn.Close();
                 }
                 else
                 {
@@ -119,11 +122,11 @@ namespace Bank_Credit_Manager
         {
             this.Output("Панель пользователя(клиента):\t1.Просмотерть заявок\t2.Остаток кредитов\t3.Детали кредита в виде графика погашения\t0.Выход");
             string _cmd = string.Empty;
-            while(_cmd == "0")
+            while(_cmd != "0")
             {
                 _cmd = this.Input("Выберите действие(1,2,3,0): ");
                 SQLManager _sqlManger = new SQLManager();
-                SqlDataReader _reader;
+                SqlDataReader _reader = null;
                 if(_cmd == "1")
                 {
                     _reader = _sqlManger.Select($"select _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_aim, _credit_term, _results from users_application where _login='{_name}'");
@@ -194,7 +197,7 @@ namespace Bank_Credit_Manager
             int _credit_term = Convert.ToInt32(Input("Срок кредита: "));
             int _credit_summ = Convert.ToInt32(Input("Сумма кредита: "));
             ClientApplication _client = new ClientApplication(_login);
-            _client.CreateApplication(_user_gender, _married, _user_age, _nationality, _credit_summ_from_general_revenue, _credit_aim, _creditTerm);
+            _client.CreateApplication(_user_gender, _married, _user_age, _nationality, _credit_summ_from_general_revenue, _credit_aim, _credit_term);
             bool _isAccepted = _client.AcceptedToCredit();
             string _status = "NONE";
             
@@ -213,7 +216,7 @@ namespace Bank_Credit_Manager
         {
             SQLManager _sqlManger = new SQLManager();
             string date = $"{DateTime.Now.Day.ToString()}.{DateTime.Now.Month.ToString()}.{DateTime.Now.Year.ToString()}";
-            float toPay = float.Parse(_sqlManger.Select($"select _summ from payment_list where _login={_login}").GetValue(0).ToString().Trim().Replcae('.', ','));
+            float toPay = float.Parse(_sqlManger.Select($"select _summ from payment_list where _login={_login}").GetValue(0).ToString().Trim().Replace('.', ','));
             _summ = toPay - _summ;
             _sqlManger.InsertData("payment_list", "_login, _date, _summ", $"'{_login}', '{date}', {_summ}");
             if(_summ <= 0)

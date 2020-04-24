@@ -6,6 +6,7 @@
     Описание: Осуществление регистрации заявок от клиентов
 */
 using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Bank_Credit_Manager
@@ -17,39 +18,51 @@ namespace Bank_Credit_Manager
         {
             _name = clientName;
         }
-        public void CreateApplication(string _gender, string _isMarried, int _age, string _nation, int _creditSumm, string _creditAim, string _creditTerm)
+        public void CreateApplication(string _gender, string _isMarried, int _age, string _nation, int _creditSumm, string _creditAim, int _creditTerm)
         {
             SQLManager _sqlManager = new SQLManager();
             _sqlManager.InsertData("users_application", "_login, _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_history, _arrearage_in_credit_history, _credit_aim, _credit_term, _status, _ball, _results, _is_payed", 
-            $"{_name}, '{_gender}', {_age}, '{_isMarried}', '{_nation}', {_creditSumm}, {this.CreditsCount(_name)}, {this.CreditArrearage(_name)}, '{_creditAim}', {_creditTerm}, 'NONE', 0, 0, 0");
+            $"{_name}, '{_gender}', {_age}, '{_isMarried}', '{_nation}', {_creditSumm}, {this.CreditsCount()}, {this.CreditArrearage()}, '{_creditAim}', {_creditTerm}, 'NONE', 0, 0, 0");
         }
 
         public int CreditArrearage()
         {
+            int res = 0;
             SQLManager _sqlManager = new SQLManager();
             SqlDataReader _reader = _sqlManager.Select($"select _login from users_application where _login='{_name}'");
-            if(_reader.FieldCount > 0)
+            while(_reader.Read())
             {
-                _reader = _sqlManager.Select("select _arrearage_in_credit_history from users_application where _name='{_name}'");
-                _reader.Close();
-                return Convert.ToInt32(_reader.GetValue(0));
+                if(_reader.FieldCount > 0)
+                {
+                    _reader = _sqlManager.Select("select _arrearage_in_credit_history from users_application where _name='{_name}'");
+                    res = Convert.ToInt32(_reader.GetValue(0));
+                    _reader.Close();
+                    _sqlManager._sqlConn.Close();
+                }
+                else
+                    res = 0;
             }
-            else
-                return 0;
+            return res;
         }
 
         public int CreditsCount()
         {
+            int res = 0;
             SQLManager _sqlManager = new SQLManager();
             SqlDataReader _reader = _sqlManager.Select($"select _login from users_application where _login='{_name}'");
-            if(_reader.FieldCount > 0)
+            while(_reader.Read())
             {
-                _reader = _sqlManager.Select("select _credit_history from users_application where _name='{_name}'");
-                _reader.Close();
-                return Convert.ToInt32(_reader.GetValue(0));
+                if(_reader.FieldCount > 0)
+                {
+                    _reader = _sqlManager.Select("select _credit_history from users_application where _name='{_name}'");
+                    res = Convert.ToInt32(_reader.GetValue(0));
+                    _reader.Close();
+                    _sqlManager._sqlConn.Close();
+                    }
+                else
+                    res = 0;
             }
-            else
-                return 0;
+            return res;
         }
 
         public bool AcceptedToCredit()
@@ -58,21 +71,21 @@ namespace Bank_Credit_Manager
             SQLManager _sqlManager = new SQLManager();
             SqlDataReader _reader = _sqlManager.Select("select _user_gender, _user_age, _married, _nationality, _credit_summ_from_general_revenue, _credit_history, _arrearage_in_credit_history, _credit_aim, _credit_term from users_application where _name='{_name}'");
             string _user_gender = _reader.GetValue(0).ToString().Trim();
-            int _user_age = _reader.GetValue(1);
+            int _user_age = int.Parse(_reader.GetValue(1).ToString());
             string _married = _reader.GetValue(2).ToString().Trim();
             string _nationality = _reader.GetValue(3).ToString().Trim();
-            int _credit_summ_from_general_revenue = _reader.GetValue(4);
-            int _credit_history = _reader.GetValue(5);
-            int _arrearage_in_credit_history = _reader.GetValue(6);
+            int _credit_summ_from_general_revenue = int.Parse(_reader.GetValue(4).ToString());
+            int _credit_history = int.Parse(_reader.GetValue(5).ToString());
+            int _arrearage_in_credit_history = int.Parse(_reader.GetValue(6).ToString());
             string _credit_aim = _reader.GetValue(7).ToString().Trim();
-            int _credit_term = _reader.GetValue(8);
+            int _credit_term = int.Parse(_reader.GetValue(8).ToString());
 
             if(_user_gender == "муж")
                 _balls++;
             else if(_user_gender == "жен")
                 _balls += 2;
 
-            if(_marrieda == "холост")
+            if(_married == "холост")
                 _balls++;
             else if(_married == "семеянин")
                 _balls += 2;
@@ -84,21 +97,21 @@ namespace Bank_Credit_Manager
 
             if(_user_age < 25)
                 _balls += 0;
-            else if(_user_age => 25 || _user_age <= 35)
+            else if(_user_age >= 25 || _user_age <= 35)
                 _balls++;
-            else if(_user_age => 36 || _user_age <= 62)
+            else if(_user_age >= 36 || _user_age <= 62)
                 _balls += 2;
-            else if(_user_age => 63)
+            else if(_user_age >= 63)
                 _balls++;
 
-            if(_nationality = "Таджикистан")
+            if(_nationality == "Таджикистан")
                 _balls++;
-            else if(_nationality = "Зарубеж")
+            else if(_nationality == "Зарубеж")
                 _balls += 0;
 
             if(_credit_summ_from_general_revenue < 80)
                 _balls += 4;
-            else if(_credit_summ_from_general_revenue => 80 || _credit_summ_from_general_revenue <= 150)
+            else if(_credit_summ_from_general_revenue >= 80 || _credit_summ_from_general_revenue <= 150)
                 _balls += 3;
             else if(_credit_summ_from_general_revenue > 150 || _credit_summ_from_general_revenue <= 250)
                 _balls += 2;
@@ -114,7 +127,7 @@ namespace Bank_Credit_Manager
 
             if(_arrearage_in_credit_history > 7)
                 _balls -= 3;
-            else if(_arrearage_in_credit_history => 5 || _arrearage_in_credit_history <= 7)
+            else if(_arrearage_in_credit_history >= 5 || _arrearage_in_credit_history <= 7)
                 _balls -= 2;
             else if(_arrearage_in_credit_history == 4)
                 _balls -= 1;
@@ -134,9 +147,14 @@ namespace Bank_Credit_Manager
             if(_credit_term > 12 || _credit_term <= 12)
                 _balls++;
 
+            _reader.Close();
+            _sqlManager._sqlConn.Close();
+
             if(_balls > 11)
                 return true;
             else if (_balls <= 11)
+                return false;
+            else
                 return false;
         }
     }
