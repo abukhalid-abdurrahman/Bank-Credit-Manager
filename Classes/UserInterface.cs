@@ -162,7 +162,22 @@ namespace Bank_Credit_Manager
         }
         public void RegistrateOutput()
         {
-
+            string _login = Input("Введите свой номер телефона: ");
+            string _password = Input("Придумайте пароль: ");
+            string _password_again = Input("Повторите пароль: ");
+            if(_password == _password_again)    
+            {
+                string _name = Input("Введите своё имя: ");
+                string _date_of_birth = Input("Введите дату рождения, формат(dd-mm-yyyy): ");
+                string _home_path = Input("Введите прописку: ");
+                string _seria = Input("Введите серию паспорта: ");
+                SQLManager _sqlManger = new SQLManager();
+                _sqlManger.InsertData("users_list_table", "_name, _login, _password, _date_of_birth, _home_path, _seria", $"'{_name}', {_login}, '{_password}', '{_date_of_birth}', '{_home_path}', '{_seria}'");
+                this.Output("Вы успешно зарегистрировались!");
+                this.UserOutput(_login);
+            }
+            else
+                RegistrateOutput();
         }
         public void ApplicationInput()
         {
