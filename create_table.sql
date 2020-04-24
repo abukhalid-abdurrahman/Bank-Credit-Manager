@@ -2,7 +2,7 @@ create table dbo.admin_list_table (
     _id             integer identity(1,1) not null,
     _name           nvarchar(6) not null,
     _password       nvarchar(35) not null,
-    constraint PK_admin_table_list primary key clustered(_id asc)
+    constraint PK_admin_list_table primary key clustered(_id asc)
 );
 
 create table dbo.users_list_table (
@@ -20,7 +20,7 @@ create table dbo.payment_list (
     _login                            integer not null,
     _date                             date not null,
     _summ                             float not null,
-    constraint PK_users_list_table    primary key clustered(_id asc)
+    constraint PK_payment_list    primary key clustered(_id asc)
 );
 
 create table dbo.users_application(
@@ -39,5 +39,5 @@ create table dbo.users_application(
     _balls                            integer,
     _results                          nvarchar(25),
     _is_payed                         integer,
-    constraint PK_users_list_table    primary key clustered(_id asc)
+    constraint PK_users_application    primary key clustered(_id asc)
 );
