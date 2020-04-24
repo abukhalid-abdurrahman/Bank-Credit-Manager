@@ -6,6 +6,7 @@ namespace Bank_Credit_Manager
     {
         static void Main(string[] args)
         {
+            /*
             UserInterface UI = new UserInterface();
             UI.Output("Здравствуйте! Вас приветствует банк Faridun Сармой 2020! Хотите получить кредит за 5 минут? Подайте заявку!!!");
             UI.Output("Выберите что хотите сделать: ");
@@ -31,6 +32,7 @@ namespace Bank_Credit_Manager
                     UI.PaymentStory(_summ, _login);
                 }
             }
+            */
         }
     }
 }

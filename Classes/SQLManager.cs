@@ -13,7 +13,6 @@ namespace Bank_Credit_Manager
 {
     class SQLManager : ISQLManager
     {
-        public SqlConnection _sqlConn;
         ///<summary>
         ///Строка соединения
         ///</summary>
@@ -29,12 +28,13 @@ namespace Bank_Credit_Manager
         {
             try
             {
-                _sqlConn = new SqlConnection(this.ConnectionString());
+                SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
                 _sqlConn.Open();
                 if(this.isConnected(_sqlConn))
                 {
-                    SqlCommand _sqlCmd = new SqlCommand($"insert into dbo.{_tableName} ({_columns}) values({_values})", _sqlConn);  
+                    SqlCommand _sqlCmd = new SqlCommand($"insert into [Faridun].[dbo].[{_tableName}] ({_columns}) values({_values})", _sqlConn);  
                     _sqlCmd.ExecuteNonQuery();
+                    _sqlConn.Close();
                 } 
             }
             catch(Exception ex)

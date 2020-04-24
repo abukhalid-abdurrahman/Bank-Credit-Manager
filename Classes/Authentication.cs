@@ -6,8 +6,8 @@
     Описание: Осуществление регистрацию и авторизацию пользователя
 */
 using System;
+using System.Data;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
 
 namespace Bank_Credit_Manager
 {
@@ -18,6 +18,8 @@ namespace Bank_Credit_Manager
         public string dateOfBirth = string.Empty;
         public string homePath = string.Empty;
         public string seria = string.Empty;
+        public int loginUser = 0;
+        private SQLManager _sqlManage = new SQLManager();
         public Authentication(string _name, string _password)
         {
             username = _name;
@@ -29,7 +31,7 @@ namespace Bank_Credit_Manager
         ///</summary>
         public bool RegistrateAccount(string _table_name)
         {
-            if(this.isPreviouslyCreated(true))
+            if(this.isPreviouslyCreated(false))
                 return false;
             else
             {
@@ -37,10 +39,9 @@ namespace Bank_Credit_Manager
                 {
                     SQLManager _sqlManager = new SQLManager();
                     if(_table_name == "users_list_table")
-                        _sqlManager.InsertData("users_list_table", "_name, _password, _date_of_birth, _home_path, _seria", $"'{username}', '{userpassword}', '{dateOfBirth}', '{homePath}', '{seria}'");
+                        _sqlManager.InsertData("users_list_table", "_name, _login, _password, _date_of_birth, _home_path, _seria", $"'{username}', {loginUser}, '{userpassword}', '{dateOfBirth}', '{homePath}', '{seria}'");
                     else
                         _sqlManager.InsertData($"{_table_name}", "_name, _password", "'{username}', '{userpassword}'");
-                    _sqlManager._sqlConn.Close();
                     return true;
                 }
                 catch(Exception ex)
@@ -58,23 +59,29 @@ namespace Bank_Credit_Manager
         {
             string _query = string.Empty;
             if(_admin)
-                _query = $"select _name from admin_list_table where _name={username}";
+                _query = $"select _name from [Faridun].[dbo].[admin_list_table] where _name='{username}'";
             else
-                _query = $"select _name from users_list_table where _name={username}";
-            SQLManager _sqlManager = new SQLManager();
-            SqlDataReader _reader = _sqlManager.Select(_query);
-            if(_reader.FieldCount > 0)
+                _query = $"select _name from [Faridun].[dbo].[users_list_table] where _name='{username}'";
+            bool _created = false;
+            int _counted = 0;
+            SqlConnection _sqlConn = new SqlConnection(_sqlManage.ConnectionString());
+            _sqlConn.Open();
+            if(_sqlConn.State == ConnectionState.Open)
             {
-                 _reader.Close();
-                 _sqlManager._sqlConn.Close();
-                return true;
-            }
-            else
-            {
+                SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
+                SqlDataReader _reader = _sqlCmd.ExecuteReader();
+                while(_reader.Read())
+                {
+                    _counted++;
+                }
+                if(_counted > 0)
+                    _created = true;
+                else
+                    _created = false;
                 _reader.Close();
-                _sqlManager._sqlConn.Close();
-                return false;
+                _sqlConn.Close();
             }
+            return _created;
         }
 
         ///<summary>
@@ -82,33 +89,26 @@ namespace Bank_Credit_Manager
         ///</summary>
         public bool Login(string _table_name)
         {
-            string _query = string.Empty;
-            SQLManager _sqlManager = new SQLManager();
-            SqlDataReader _reader = _sqlManager.Select($"select _name, _password from {_table_name} where _name={username} and _password={userpassword}");
-            while(_reader.Read())
+            bool _logged = false;
+            int _counted = 0;
+            SqlConnection _sqlConn = new SqlConnection(_sqlManage.ConnectionString());
+            _sqlConn.Open();
+            if(_sqlConn.State == ConnectionState.Open)
             {
-                if(_reader.FieldCount > 0)
+                SqlCommand _sqlCmd = new SqlCommand($"select _name, _password from [Faridun].[dbo].[{_table_name}] where (_name='{username}' and _password='{userpassword}')", _sqlConn);
+                SqlDataReader _reader = _sqlCmd.ExecuteReader();
+                while(_reader.Read())
                 {
-                    _reader.Close();
-                    _sqlManager._sqlConn.Close();
-                    return true;
+                    _counted++;
                 }
+                if(_counted > 0)
+                    _logged = true;
                 else
-                {
-                    _reader.Close();
-                    _sqlManager._sqlConn.Close();
-                    return false;
-                }
+                    _logged = false;
+                _reader.Close();
+                _sqlConn.Close();
             }
-            return false;
-        }
-
-        ///<summary>
-        ///Проверка правильности пароля
-        ///</summary>
-        public bool PasswordVerification()
-        {
-            return Regex.IsMatch(userpassword, "^[a-zA-Z0-9]+$");
+            return _logged;
         }
     }
 }

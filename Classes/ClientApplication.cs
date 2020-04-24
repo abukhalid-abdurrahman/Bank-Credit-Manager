@@ -37,7 +37,7 @@ namespace Bank_Credit_Manager
                     _reader = _sqlManager.Select("select _arrearage_in_credit_history from users_application where _name='{_name}'");
                     res = Convert.ToInt32(_reader.GetValue(0));
                     _reader.Close();
-                    _sqlManager._sqlConn.Close();
+                    //_sqlManager._sqlConn.Close();
                 }
                 else
                     res = 0;
@@ -57,7 +57,7 @@ namespace Bank_Credit_Manager
                     _reader = _sqlManager.Select("select _credit_history from users_application where _name='{_name}'");
                     res = Convert.ToInt32(_reader.GetValue(0));
                     _reader.Close();
-                    _sqlManager._sqlConn.Close();
+                    //_sqlManager._sqlConn.Close();
                     }
                 else
                     res = 0;
@@ -148,7 +148,7 @@ namespace Bank_Credit_Manager
                 _balls++;
 
             _reader.Close();
-            _sqlManager._sqlConn.Close();
+            //_sqlManager._sqlConn.Close();
 
             if(_balls > 11)
                 return true;
