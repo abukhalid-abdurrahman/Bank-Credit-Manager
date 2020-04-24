@@ -205,5 +205,10 @@ namespace Bank_Credit_Manager
             SQLManager _sqlManger = new SQLManager();
             _sqlManger.UpdateData("users_application", $"_status='{_status}'", $"_login={_login}");
         }
+
+        public void PaymentStory(float _summ)
+        {
+
+        }
     }
 }

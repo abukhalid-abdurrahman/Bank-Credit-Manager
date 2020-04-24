@@ -10,5 +10,6 @@ namespace Bank_Credit_Manager
         void ApplicationInput(string _login);
         void AdminOutput();
         void UserOutput(string _name);
+        void PaymentStory(float _summ);
     }
 }
