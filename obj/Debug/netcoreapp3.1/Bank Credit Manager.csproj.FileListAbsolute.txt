@@ -1,0 +1,4 @@
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.csprojAssemblyReference.cache
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.csproj.CoreCompileInputs.cache
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.AssemblyInfoInputs.cache
+C:\Users\Faridun\Allif Academy\Bank-Credit-Manager\obj\Debug\netcoreapp3.1\Bank Credit Manager.AssemblyInfo.cs

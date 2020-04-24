@@ -15,7 +15,7 @@ namespace Bank_Credit_Manager
         {
             return Console.ReadLine();
         }
-        public public string Input(string _text)
+        public string Input(string _text)
         {
             Console.Write(_text);
             return Console.ReadLine();

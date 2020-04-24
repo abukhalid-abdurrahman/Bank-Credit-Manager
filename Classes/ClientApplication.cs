@@ -12,7 +12,7 @@ namespace Bank_Credit_Manager
 {
     public class ClientApplication : IClientApplication
     {
-        private stringc _name;
+        private string _name;
         public ClientApplication(string clientName)
         {
             _name = clientName;
