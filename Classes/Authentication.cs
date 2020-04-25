@@ -18,7 +18,10 @@ namespace Bank_Credit_Manager
         public string dateOfBirth = string.Empty;
         public string homePath = string.Empty;
         public string seria = string.Empty;
+<<<<<<< HEAD
         public int loginUser = 0;
+=======
+>>>>>>> 056ac2ca7b6a67e7d2b15886abce18fdde545c93
         private SQLManager _sqlManage = new SQLManager();
         public Authentication(string _name, string _password)
         {
@@ -59,12 +62,21 @@ namespace Bank_Credit_Manager
         {
             string _query = string.Empty;
             if(_admin)
+<<<<<<< HEAD
                 _query = $"select _name from [Faridun].[dbo].[admin_list_table] where _name='{username}'";
             else
                 _query = $"select _name from [Faridun].[dbo].[users_list_table] where _name='{username}'";
             bool _created = false;
             int _counted = 0;
             SqlConnection _sqlConn = new SqlConnection(_sqlManage.ConnectionString());
+=======
+                _query = $"select _name from admin_list_table where _name={username}";
+            else
+                _query = $"select _name from users_list_table where _name={username}";
+            bool _created = false;
+            int _counted = 0;
+            SqlConncection _sqlConn = new SqlConncection(_sqlManage.ConnectionString());
+>>>>>>> 056ac2ca7b6a67e7d2b15886abce18fdde545c93
             _sqlConn.Open();
             if(_sqlConn.State == ConnectionState.Open)
             {
@@ -91,11 +103,19 @@ namespace Bank_Credit_Manager
         {
             bool _logged = false;
             int _counted = 0;
+<<<<<<< HEAD
             SqlConnection _sqlConn = new SqlConnection(_sqlManage.ConnectionString());
             _sqlConn.Open();
             if(_sqlConn.State == ConnectionState.Open)
             {
                 SqlCommand _sqlCmd = new SqlCommand($"select _name, _password from [Faridun].[dbo].[{_table_name}] where (_name='{username}' and _password='{userpassword}')", _sqlConn);
+=======
+            SqlConncection _sqlConn = new SqlConncection(_sqlManage.ConnectionString());
+            _sqlConn.Open();
+            if(_sqlConn.State == ConnectionState.Open)
+            {
+                SqlCommand _sqlCmd = new SqlCommand($"select (_name, _password) from {_table_name} where (_name={username} and _password={password})", _sqlConn);
+>>>>>>> 056ac2ca7b6a67e7d2b15886abce18fdde545c93
                 SqlDataReader _reader = _sqlCmd.ExecuteReader();
                 while(_reader.Read())
                 {
@@ -109,6 +129,17 @@ namespace Bank_Credit_Manager
                 _sqlConn.Close();
             }
             return _logged;
+<<<<<<< HEAD
+=======
+        }
+
+        ///<summary>
+        ///Проверка правильности пароля
+        ///</summary>
+        public bool PasswordVerification()
+        {
+            return Regex.IsMatch(userpassword, "^[a-zA-Z0-9]+$");
+>>>>>>> 056ac2ca7b6a67e7d2b15886abce18fdde545c93
         }
     }
 }

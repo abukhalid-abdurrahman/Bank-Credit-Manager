@@ -7,7 +7,7 @@ namespace Bank_Credit_Manager
         static void Main(string[] args)
         {
             UserInterface UI = new UserInterface();
-            UI.Output("Здравствуйте! Вас приветствует банк Faridun Сармой 2020! Хотите получить кредит за 5 минут? Подайте заявку!!!");
+            UI.Output("Здравствуйте! Вас приветствует банк Faridun Сармоя 2020! Хотите получить кредит за 5 минут? Подайте заявку!!!");
             UI.Output("Выберите что хотите сделать: ");
             UI.Output("1. Войти");
             UI.Output("2. Регистрация");
