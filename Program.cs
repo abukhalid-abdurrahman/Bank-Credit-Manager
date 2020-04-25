@@ -26,9 +26,16 @@ namespace Bank_Credit_Manager
                 }
                 else if(cmd == "3")
                 {
-                    string _login = UI.Input("Введите логин(номер телефона): ").Replace('.', ',');
-                    float _summ = float.Parse(UI.Input("Введите сумму: ").Replace('.', ','));
-                    UI.PaymentStory(_summ, _login);
+                    string _login = string.Empty;
+                    while (_login != "/Назад/")
+                    {
+                        _login = UI.Input("Введите логин(номер телефона): ").Replace('.', ',');
+                        if(_login != "/Назад/")
+                        {
+                            float _summ = float.Parse(UI.Input("Введите сумму: ").Replace('.', ','));
+                            UI.PaymentStory(_summ, _login);
+                        }
+                    }
                 }
             }
         }

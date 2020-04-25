@@ -44,58 +44,62 @@ namespace Bank_Credit_Manager
         public void LoginOutput()
         {
             bool _isAdmin = false;
-            string _login = Input("Логин (Номер телефона): ");
-            string _password = string.Empty;
-            if (_login == "/admin/")
-                _isAdmin = true;
-            else
-                _password = Input("Пароль: ");
-
-            if (_isAdmin)
+            string _login = string.Empty;
+            while (_login != "/Назад/")
             {
-                this.Output("Вы вошли в панель администратора!");
-                string _adminLogin = Input("Введите имя: ");
-                string _adminPassword = Input("Введите пароль: ");
-                Authentication _auth = new Authentication(_adminLogin, _adminPassword);
-                bool _isLogged = _auth.Login("admin_list_table");
-                if (_isLogged)
-                {
-                    this.Output("Приветствую вас: " + _adminLogin);
-                    this.AdminOutput();
-                }
+                _login = Input("Логин (Номер телефона): ");
+                string _password = string.Empty;
+                if (_login == "/admin/")
+                    _isAdmin = true;
                 else
+                    _password = Input("Пароль: ");
+
+                if (_isAdmin)
                 {
-                    this.Output("Не правильный логин или пароль!");
-                }
-            }
-            else
-            {
-                Authentication _auth = new Authentication(_login, _password);
-                _auth.loginUser = int.Parse(_login);
-                bool _isLogged = _auth.Login("users_list_table");
-                if (_isLogged)
-                {
-                    SQLManager _sqlManger = new SQLManager();
-                    SqlConnection _sqlConn = new SqlConnection(_sqlManger.ConnectionString());
-                    _sqlConn.Open();
-                    if (_sqlConn.State == ConnectionState.Open)
+                    this.Output("Вы вошли в панель администратора!");
+                    string _adminLogin = Input("Введите имя: ");
+                    string _adminPassword = Input("Введите пароль: ");
+                    Authentication _auth = new Authentication(_adminLogin, _adminPassword);
+                    bool _isLogged = _auth.Login("admin_list_table");
+                    if (_isLogged)
                     {
-                        SqlCommand _sqlCmd = new SqlCommand($"select _name from users_list_table where _login={_login}", _sqlConn);
-                        SqlDataReader _reader = _sqlCmd.ExecuteReader();
-                        string _loggedUserName = string.Empty;
-                        while (_reader.Read())
-                        {
-                            _loggedUserName = _reader.GetValue(0).ToString().Trim();
-                        }
-                        this.Output("Приветствую вас: " + _loggedUserName);
-                        this.UserOutput(_login);
-                        _reader.Close();
-                        _sqlConn.Close();
+                        this.Output("Приветствую вас: " + _adminLogin);
+                        this.AdminOutput();
+                    }
+                    else
+                    {
+                        this.Output("Не правильный логин или пароль!");
                     }
                 }
                 else
                 {
-                    this.Output("Не правильный логин или пароль!");
+                    Authentication _auth = new Authentication(_login, _password);
+                    _auth.loginUser = int.Parse(_login);
+                    bool _isLogged = _auth.Login("users_list_table");
+                    if (_isLogged)
+                    {
+                        SQLManager _sqlManger = new SQLManager();
+                        SqlConnection _sqlConn = new SqlConnection(_sqlManger.ConnectionString());
+                        _sqlConn.Open();
+                        if (_sqlConn.State == ConnectionState.Open)
+                        {
+                            SqlCommand _sqlCmd = new SqlCommand($"select _name from users_list_table where _login={_login}", _sqlConn);
+                            SqlDataReader _reader = _sqlCmd.ExecuteReader();
+                            string _loggedUserName = string.Empty;
+                            while (_reader.Read())
+                            {
+                                _loggedUserName = _reader.GetValue(0).ToString().Trim();
+                            }
+                            this.Output("Приветствую вас: " + _loggedUserName);
+                            this.UserOutput(_login);
+                            _reader.Close();
+                            _sqlConn.Close();
+                        }
+                    }
+                    else
+                    {
+                        this.Output("Не правильный логин или пароль!");
+                    }
                 }
             }
         }
@@ -171,7 +175,7 @@ namespace Bank_Credit_Manager
         ///</summary>
         public void UserOutput(string _name)
         {
-            this.Output("Панель пользователя(клиента):\t1.Просмотерть заявок\t2.Остаток кредитов\t3.Детали кредита в виде графика погашения\t0.Выход");
+            this.Output("Панель пользователя(клиента):\t1.Просмотерть заявок\t2.Остаток кредитов\t3.Детали кредита в виде графика погашения\t4.Подать заявку\t0.Выход");
             string _cmd = string.Empty;
             while (_cmd != "0")
             {
@@ -255,6 +259,10 @@ namespace Bank_Credit_Manager
                         _sqlConn.Close();
                     }
                 }
+                else if (_cmd == "4")
+                {
+                    ApplicationInput(_name);
+                }
             }
         }
 
@@ -263,28 +271,32 @@ namespace Bank_Credit_Manager
         ///</summary>
         public void RegistrateOutput()
         {
-            string _login = Input("Введите свой номер телефона: ");
-            string _password = Input("Придумайте пароль: ");
-            string _password_again = Input("Повторите пароль: ");
-            if (_password == _password_again)
+            string _login = string.Empty;
+            while (_login != "/Назад/")
             {
-                string _name = Input("Введите своё имя: ");
-                string _date_of_birth = Input("Введите дату рождения, формат(dd-mm-yyyy): ");
-                string _home_path = Input("Введите прописку: ");
-                string _seria = Input("Введите серию паспорта: ");
-                Authentication authentication = new Authentication(_name, _password);
-                authentication.dateOfBirth = _date_of_birth;
-                authentication.homePath = _home_path;
-                authentication.loginUser = int.Parse(_login);
-                bool _reged = authentication.RegistrateAccount("users_list_table");
-                if (_reged)
+                _login = Input("Введите свой номер телефона: ");
+                string _password = Input("Придумайте пароль: ");
+                string _password_again = Input("Повторите пароль: ");
+                if (_password == _password_again)
                 {
-                    this.Output("Вы успешно зарегистрировались!");
-                    string _agree = Input("Хотите подать заявку? (Д/Н): ");
-                    if (_agree == "Д")
-                        ApplicationInput(_login);
-                    else
-                        return;
+                    string _name = Input("Введите своё имя: ");
+                    string _date_of_birth = Input("Введите дату рождения, формат(dd-mm-yyyy): ");
+                    string _home_path = Input("Введите прописку: ");
+                    string _seria = Input("Введите серию паспорта: ");
+                    Authentication authentication = new Authentication(_name, _password);
+                    authentication.dateOfBirth = _date_of_birth;
+                    authentication.homePath = _home_path;
+                    authentication.loginUser = int.Parse(_login);
+                    bool _reged = authentication.RegistrateAccount("users_list_table");
+                    if (_reged)
+                    {
+                        this.Output("Вы успешно зарегистрировались!");
+                        string _agree = Input("Хотите подать заявку? (Д/Н): ");
+                        if (_agree == "Д")
+                            ApplicationInput(_login);
+                        else
+                            return;
+                    }
                 }
             }
         }
