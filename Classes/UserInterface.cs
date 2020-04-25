@@ -71,6 +71,7 @@ namespace Bank_Credit_Manager
             else
             {
                 Authentication _auth = new Authentication(_login, _password);
+                _auth.loginUser = int.Parse(_login);
                 bool _isLogged = _auth.Login("users_list_table");
                 if (_isLogged)
                 {

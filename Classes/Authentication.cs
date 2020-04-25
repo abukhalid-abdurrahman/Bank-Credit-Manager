@@ -89,13 +89,19 @@ namespace Bank_Credit_Manager
         ///</summary>
         public bool Login(string _table_name)
         {
-            bool _logged = false;
+            string _query = string.Empty;
+            if(_table_name == "users_list_table")
+                _query = $"select _login, _password from [Faridun].[dbo].[users_list_table] where (_login={loginUser} and _password='{userpassword}')";
+            else if(_table_name == "admin_list_table")
+                _query = $"select _name, _password from [Faridun].[dbo].[admin_list_table] where (_name='{username}' and _password='{userpassword}')";
+            
+            bool _logged = true;
             int _counted = 0;
             SqlConnection _sqlConn = new SqlConnection(_sqlManage.ConnectionString());
             _sqlConn.Open();
             if(_sqlConn.State == ConnectionState.Open)
             {
-                SqlCommand _sqlCmd = new SqlCommand($"select _name, _password from [Faridun].[dbo].[{_table_name}] where (_name='{username}' and _password='{userpassword}')", _sqlConn);
+                SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
                 SqlDataReader _reader = _sqlCmd.ExecuteReader();
                 while(_reader.Read())
                 {
