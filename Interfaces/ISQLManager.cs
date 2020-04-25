@@ -7,7 +7,6 @@ namespace Bank_Credit_Manager
         string ConnectionString();
         void InsertData(string _tableName, string _columns, string _values);
         void UpdateData(string _tableName, string _query, string _cond);
-        SqlDataReader Select(string _query);
         bool isConnected(SqlConnection _sqlConn);
     }
 }

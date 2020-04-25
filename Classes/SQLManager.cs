@@ -75,30 +75,5 @@ namespace Bank_Credit_Manager
                 Log.Error(ex.Message);
             }
         }
-
-        ///<summary>
-        ///Возвращает данные по заданому запросу
-        ///</summary>
-        public SqlDataReader Select(string _query)
-        {
-            try
-            {
-                SqlConnection _sqlConn = new SqlConnection(this.ConnectionString());
-                _sqlConn.Open();
-                if(this.isConnected(_sqlConn))
-                {
-                    SqlCommand _sqlCmd = new SqlCommand(_query, _sqlConn);
-                    var reader = _sqlCmd.ExecuteReader();
-                    return reader;
-                }
-                else
-                    return null;
-            }
-            catch(Exception ex)
-            {
-                Log.Error(ex.Message);
-                return null;
-            }
-        }
     }
 }
